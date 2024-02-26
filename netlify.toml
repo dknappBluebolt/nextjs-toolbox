@@ -1,19 +1,17 @@
-[build]
-  command = "npm run build"
-  publish = ".next"
+# Netlify toml Configuration File
+# Notes
+# - Install the "Even Better TOML" Visual Studio Code addon to get color syntax highlighting
 
-[functions]
-  node_bundler = "esbuild"
+[build.environment]
+  FAVORITE_COLORT = "green"
 
-[[plugins]]
-  package = "netlify-plugin-cypress"
-
-## Learn more about redirects here
-## https://docs.netlify.com/routing/redirects/#syntax-for-the-netlify-configuration-file
-## https://docs.netlify.com/routing/redirects/redirect-options/
-
+# THESE ONLY WORK IN NETLIFY? THE REDIRECTS IN next.config.mjs work on localhost/not on Netlify.
 [[redirects]]
-  from = "/api/*" # simplify all calls to serverless functions
-  to = "/.netlify/functions/:splat" # all function calls will go to this path
-  status = 200 # ok code
-  force = true # ensure to always redirect
+  from = "/geoalt" 
+  to = "/geolocation"
+  status = 200
+
+
+# NOTE: You need this plugin because Netlify requires an index.html and next.js doesn't have one. This will result in a 404.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
