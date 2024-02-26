@@ -17,9 +17,18 @@ export async function GET(
 
     if (!res.ok) {
         return new Response(`Error retrieving location: res.status = "${res.status}", res.statusText = "${res.statusText}""`);
-      };    
+      };
 
     var data = await res.text();
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(data, 'text/xml');
+    var relevantInfo = {
+      averageRating: doc.getElementsByTagName("average_rating")[0],
+      ratingCount: doc.getElementsByTagName("ratings_count")[0],
+    }
+
+    console.log("relevant Info", relevantInfo);
+
     return new Response(data, { 
         headers: { 
         "Content-Type": "text/xml",
